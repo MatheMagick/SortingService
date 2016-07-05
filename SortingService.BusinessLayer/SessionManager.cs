@@ -8,7 +8,7 @@ namespace SortingService.BusinessLayer
     public class SessionManager
     {
         private DataAccessLayer _dataAccess = new DataAccessLayer();
-        private NaiveSorting _sortingAlgorithm = new NaiveSorting();
+        private ImprovedSorting _sortingAlgorithm = new ImprovedSorting();
 
         public Guid StartNewSession()
         {
@@ -22,15 +22,13 @@ namespace SortingService.BusinessLayer
                 throw new FaultException($"No session for the guid provided: {streamGuid}");
             }
 
-            string[] currentData = _dataAccess.GetDataForSession(streamGuid);
+            string currentDataFile = _dataAccess.GetSortedSessionFile(streamGuid);
 
-            string[] mergedData = new string[currentData.Length + text.Length];
-            Array.Copy(currentData, mergedData, currentData.Length);
-            Array.Copy(text, 0, mergedData, currentData.Length, text.Length);
-            Array.Sort(mergedData);
+            var mergedData = _sortingAlgorithm.Sort(text, currentDataFile);
 
             _dataAccess.SetDataForSession(streamGuid, mergedData);
         }
+
 
         public string[] GetStreamData(Guid streamGuid)
         {

@@ -34,6 +34,14 @@ namespace SortingService.DataAccess
             return File.ReadAllLines(sessionFilePath);
         }
 
+        public string GetSortedSessionFile(Guid sessionGuid)
+        {
+            Debug.Assert(SessionExists(sessionGuid));
+            string sessionFilePath = GetSessionFilePath(sessionGuid);
+
+            return sessionFilePath;
+        }
+
         public void SetDataForSession(Guid sessionGuid, string[] data)
         {
             Debug.Assert(SessionExists(sessionGuid));

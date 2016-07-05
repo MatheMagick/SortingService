@@ -25,7 +25,7 @@ namespace SortingService.DataAccess {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("F:\\TestData")]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\SortingTestData")]
         public string SessionDirectoriesRoot {
             get {
                 return ((string)(this["SessionDirectoriesRoot"]));

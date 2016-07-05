@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="SessionDirectoriesRoot" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">F:\TestData</Value>
+      <Value Profile="(Default)">C:\SortingTestData</Value>
     </Setting>
   </Settings>
 </SettingsFile>
