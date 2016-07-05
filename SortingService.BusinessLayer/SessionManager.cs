@@ -24,9 +24,9 @@ namespace SortingService.BusinessLayer
 
             string currentDataFile = _dataAccess.GetSortedSessionFile(streamGuid);
 
-            var mergedData = _sortingAlgorithm.Sort(text, currentDataFile);
+            var mergedFile = _sortingAlgorithm.Sort(text, currentDataFile);
 
-            _dataAccess.SetDataForSession(streamGuid, mergedData);
+            _dataAccess.SetSortedSessionFile(streamGuid, mergedFile);
         }
 
 

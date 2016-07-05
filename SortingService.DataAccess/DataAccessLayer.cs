@@ -10,9 +10,13 @@ namespace SortingService.DataAccess
         {
             Guid result = Guid.NewGuid();
 
-            string sessionFilePath = GetSessionFilePath(result);
+            string sessionDirectoryPath = GetSessionDirectoryPath(result);
 
-            using (var fileStream = File.Create(sessionFilePath))
+            Directory.CreateDirectory(sessionDirectoryPath);
+
+            string sessionFilePath = GetSessionContentFilePath(result);
+
+            using (File.Create(sessionFilePath))
             {
             }
 
@@ -21,15 +25,15 @@ namespace SortingService.DataAccess
 
         public bool SessionExists(Guid sessionGuid)
         {
-            string sessionFilePath = GetSessionFilePath(sessionGuid);
+            string sessionDirectoryPath = GetSessionDirectoryPath(sessionGuid);
 
-            return File.Exists(sessionFilePath);
+            return Directory.Exists(sessionDirectoryPath);
         }
 
         public string[] GetDataForSession(Guid sessionGuid)
         {
             Debug.Assert(SessionExists(sessionGuid));
-            string sessionFilePath = GetSessionFilePath(sessionGuid);
+            string sessionFilePath = GetSessionContentFilePath(sessionGuid);
 
             return File.ReadAllLines(sessionFilePath);
         }
@@ -37,7 +41,7 @@ namespace SortingService.DataAccess
         public string GetSortedSessionFile(Guid sessionGuid)
         {
             Debug.Assert(SessionExists(sessionGuid));
-            string sessionFilePath = GetSessionFilePath(sessionGuid);
+            string sessionFilePath = GetSessionContentFilePath(sessionGuid);
 
             return sessionFilePath;
         }
@@ -45,21 +49,35 @@ namespace SortingService.DataAccess
         public void SetDataForSession(Guid sessionGuid, string[] data)
         {
             Debug.Assert(SessionExists(sessionGuid));
-            string sessionFilePath = GetSessionFilePath(sessionGuid);
+            string sessionFilePath = GetSessionContentFilePath(sessionGuid);
 
             File.WriteAllLines(sessionFilePath, data);
         }
 
-        private string GetSessionFilePath(Guid sessionGuid)
+        public string SetSortedSessionFile(Guid sessionGuid, string mergedFilePath)
         {
-            return $"{Settings.Default.SessionDirectoriesRoot}\\{sessionGuid.ToString()}.srt";
+            Debug.Assert(SessionExists(sessionGuid));
+            string sessionFilePath = GetSessionContentFilePath(sessionGuid);
+            File.Delete(sessionFilePath);
+            File.Move(mergedFilePath, sessionFilePath);
+            return sessionFilePath;
         }
 
         public void DeleteSession(Guid sessionGuid)
         {
-            string sessionFilePath = GetSessionFilePath(sessionGuid);
+            string sessionDirectoryPath = GetSessionDirectoryPath(sessionGuid);
 
-            File.Delete(sessionFilePath);
+            Directory.Delete(sessionDirectoryPath, true);
+        }
+
+        private string GetSessionDirectoryPath(Guid sessionGuid)
+        {
+            return $"{Settings.Default.SessionDirectoriesRoot}\\{sessionGuid}\\";
+        }
+
+        private string GetSessionContentFilePath(Guid sessionGuid)
+        {
+            return GetSessionDirectoryPath(sessionGuid) + "content.txt";
         }
     }
 }
