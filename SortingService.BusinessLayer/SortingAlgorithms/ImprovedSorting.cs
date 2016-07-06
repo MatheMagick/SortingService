@@ -31,7 +31,7 @@ namespace SortingService.BusinessLayer.SortingAlgorithms
                         mergedFileStream.WriteLine(receivedDataLine);
                         receivedDataLine = receivedDataReader.ReadLine();
                     }
-                    else if (receivedDataLine == null || string.Compare(originalDataLine, receivedDataLine, StringComparison.Ordinal) < 0)
+                    else if (receivedDataLine == null || string.Compare(originalDataLine, receivedDataLine, StringComparison.OrdinalIgnoreCase) < 1)
                     {
                         mergedFileStream.WriteLine(originalDataLine);
                         originalDataLine = originalDataReader.ReadLine();
