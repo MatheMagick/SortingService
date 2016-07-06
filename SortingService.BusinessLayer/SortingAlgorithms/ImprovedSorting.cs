@@ -9,12 +9,14 @@ namespace SortingService.BusinessLayer.SortingAlgorithms
         {
             Array.Sort(recievedData);
 
-            //TODO change the file path dynamically
-            string chunkFilePath = Path.ChangeExtension(currentDataFile, ".srt1");
+            string chunkFilePath = Path.ChangeExtension(currentDataFile, ".chunk");
+            // Dump the received data to a file so in case of an outage we don't lose it and it gets processed upon startup
             File.WriteAllLines(chunkFilePath, recievedData);
+
             string mergedFilePath = Path.ChangeExtension(currentDataFile, ".merged");
 
-            //MemoryMappedFile is also an option, but in this case we prefer StreamReader because we just need to read the file line by line, not manipulate its memory
+            //MemoryMappedFile is also an option, but in this case we prefer StreamReader
+            //because we just need to read the file line by line, not manipulate its memory in-place
             using (var mergedFileStream = File.CreateText(mergedFilePath))
             using (var originalDataReader = new StreamReader(currentDataFile))
             using (var receivedDataReader = new StreamReader(chunkFilePath))
