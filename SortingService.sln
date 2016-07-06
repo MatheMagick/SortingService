@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SortingService", "SortingService\SortingService.csproj", "{EF7F3294-9E47-401C-BE2D-2B37E98B6F01}"
 EndProject
@@ -10,6 +10,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SortingService.DataAccess", "SortingService.DataAccess\SortingService.DataAccess.csproj", "{899738E2-FCEC-4CBD-9344-16EF523B627E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SortingService.Client", "SortingService.Client\SortingService.Client.csproj", "{7F82DCE8-F633-497D-BF7D-E7F1EFE193CA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{EF7F3294-9E47-401C-BE2D-2B37E98B6F01} = {EF7F3294-9E47-401C-BE2D-2B37E98B6F01}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

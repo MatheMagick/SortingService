@@ -10,7 +10,7 @@ namespace SortingService
     {
         // TODO Use IoC
         // TODO On startup process all unfinished merges
-        private readonly SessionManager _sessionManager = new SessionManager();
+        private readonly SessionManager _sessionManager =SessionManager.Instance;
 
         /// <summary>
         /// Begins a new stream
