@@ -8,10 +8,9 @@ namespace SortingService.DataAccess
     {
         public Guid CreateNewSession()
         {
-            Guid result = Guid.NewGuid();
-
-            string sessionDirectoryPath = GetSessionDirectoryPath(result);
-
+            var result = GetNewUnusedGuid();
+            var sessionDirectoryPath = GetSessionDirectoryPath(result);
+            // Creating the directory reserves this Guid
             Directory.CreateDirectory(sessionDirectoryPath);
 
             string sessionFilePath = GetSessionContentFilePath(result);
@@ -68,6 +67,19 @@ namespace SortingService.DataAccess
             string sessionDirectoryPath = GetSessionDirectoryPath(sessionGuid);
 
             Directory.Delete(sessionDirectoryPath, true);
+        }
+
+        private Guid GetNewUnusedGuid()
+        {
+            Guid result;
+
+            do
+            {
+                result = Guid.NewGuid();
+            }
+            while (SessionExists(result));
+
+            return result;
         }
 
         private string GetSessionDirectoryPath(Guid sessionGuid)

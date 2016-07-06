@@ -9,6 +9,7 @@ namespace SortingService
     public class SortingService : ISortingService
     {
         // TODO Use IoC
+        // TODO On startup process all unfinished merges
         private SessionManager _sessionManager = new SessionManager();
 
         public Guid BeginStream()
