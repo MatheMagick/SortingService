@@ -8,7 +8,10 @@ namespace SortingService.DataAccess
     {
         public Guid CreateNewSession()
         {
-            var result = GetNewUnusedGuid();
+            // Since the probability of a Guid crash is practically impossible (most DB engines rely on that), there's no need to double-check whether the Guid is already used.
+            // For reference - http://stackoverflow.com/questions/2977593/is-it-safe-to-assume-a-guid-will-always-be-unique
+            // In case this is a security concern, add a check whether the guid is already used
+            var result = Guid.NewGuid();
             var sessionDirectoryPath = GetSessionDirectoryPath(result);
             // Creating the directory reserves this Guid
             Directory.CreateDirectory(sessionDirectoryPath);
@@ -67,19 +70,6 @@ namespace SortingService.DataAccess
             string sessionDirectoryPath = GetSessionDirectoryPath(sessionGuid);
 
             Directory.Delete(sessionDirectoryPath, true);
-        }
-
-        private Guid GetNewUnusedGuid()
-        {
-            Guid result;
-
-            do
-            {
-                result = Guid.NewGuid();
-            }
-            while (SessionExists(result));
-
-            return result;
         }
 
         private string GetSessionDirectoryPath(Guid sessionGuid)

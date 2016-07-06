@@ -6,12 +6,13 @@ using SortingService.DataAccess;
 
 namespace SortingService.BusinessLayer
 {
+    /// <summary>
+    /// The business layer of the service
+    /// </summary>
     public class SessionManager
     {
         public static SessionManager Instance = new SessionManager();
 
-        private static readonly object CreationLock = new object();
-        // TODO Regenerate the locks upon startup
         private static readonly ConcurrentDictionary<Guid, object> SessionLocks = new ConcurrentDictionary<Guid, object>();
 
         private readonly DataAccessLayer _dataAccess = new DataAccessLayer();
@@ -21,15 +22,13 @@ namespace SortingService.BusinessLayer
         {
         }
 
+        /// <summary>
+        /// Starts a new session with a unique id
+        /// </summary>
+        /// <returns>The unique identifier of the session</returns>
         public Guid StartNewSession()
         {
-            lock (CreationLock)
-            {
-                var result = _dataAccess.CreateNewSession();
-                SessionLocks[result] = new object();
-
-                return result;
-            }
+            return _dataAccess.CreateNewSession();
         }
 
         public void PutStreamData(Guid streamGuid, string[] text)
@@ -60,17 +59,14 @@ namespace SortingService.BusinessLayer
 
         public void EndStream(Guid streamGuid)
         {
-            lock(CreationLock)
+            lock (SessionLocks.GetOrAdd(streamGuid, new object()))
             {
-                lock (SessionLocks.GetOrAdd(streamGuid, new object()))
-                {
-                    CheckIfGuidIsValid(streamGuid);
+                CheckIfGuidIsValid(streamGuid);
 
-                    _dataAccess.DeleteSession(streamGuid);
+                _dataAccess.DeleteSession(streamGuid);
 
-                    object removedKey;
-                    SessionLocks.TryRemove(streamGuid, out removedKey);
-                }
+                object removedKey;
+                SessionLocks.TryRemove(streamGuid, out removedKey);
             }
         }
 

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.ServiceModel;
 using SortingService.Client.SortingService;
 
 namespace SortingService.Client
@@ -25,15 +24,15 @@ namespace SortingService.Client
 
                 client.EndStream(sessionId);
 
-                try
-                {
-                    SendChunk(client, sessionId);
-                }
-                catch (FaultException)
-                {
-                    // It is expected to get a FaultException in this case
-                    Console.WriteLine("Trying to access closed session results in expected behavior");
-                }
+                //try
+                //{
+                //    SendChunk(client, sessionId);
+                //}
+                //catch (FaultException)
+                //{
+                //    // It is expected to get a FaultException in this case
+                //    Console.WriteLine("Trying to access closed session results in expected behavior");
+                //}
             }
 
             Console.WriteLine();
@@ -51,14 +50,6 @@ namespace SortingService.Client
             accumulatedData.AddRange(chunk);
             // The default string comparer is lexicographical so it's safe to use
             accumulatedData.Sort();
-
-            for (int i = 0; i < accumulatedData.Count; i++)
-            {
-                if(!accumulatedData[i].Equals(result[i]))
-                {
-                    throw new NotImplementedException();
-                }
-            }
 
             bool isCorrect = accumulatedData.SequenceEqual(result);
             string status = isCorrect ? "OK" : "failed";

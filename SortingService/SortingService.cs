@@ -41,6 +41,10 @@ namespace SortingService
             return _sessionManager.GetStreamData(streamGuid);
         }
 
+        /// <summary>
+        /// Ends the stream associated with the id provided, freeing up any resources taken
+        /// </summary>
+        /// <param name="streamGuid">The unique identifier of the session</param>
         public void EndStream(Guid streamGuid)
         {
             _sessionManager.EndStream(streamGuid);
