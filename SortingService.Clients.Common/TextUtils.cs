@@ -14,7 +14,7 @@ namespace SortingService.Client
                 .ToArray();
         }
 
-        private static string RandomAlphanumericString(int length)
+        public static string RandomAlphanumericString(int length)
         {
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz 0123456789";
             return new string(Enumerable.Range(0, length)
