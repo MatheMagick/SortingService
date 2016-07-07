@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.IO;
 using System.ServiceModel;
 using SortingService.BusinessLayer.SortingAlgorithms;
 using SortingService.DataAccess;
@@ -46,7 +47,7 @@ namespace SortingService.BusinessLayer
             }
         }
 
-        public string[] GetStreamData(Guid streamGuid)
+        public Stream GetStreamData(Guid streamGuid)
         {
             lock (SessionLocks.GetOrAdd(streamGuid, new object()))
             {

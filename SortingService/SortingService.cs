@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using SortingService.BusinessLayer;
 
 namespace SortingService
@@ -36,7 +37,7 @@ namespace SortingService
         /// </summary>
         /// <param name="streamGuid">The unique identifier of the session</param>
         /// <returns>The data accumulated so far, sorted lexicographically line by line</returns>
-        public string[] GetSortedStream(Guid streamGuid)
+        public Stream GetSortedStream(Guid streamGuid)
         {
             return _sessionManager.GetStreamData(streamGuid);
         }
