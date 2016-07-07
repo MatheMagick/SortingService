@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.ServiceModel;
 
 namespace SortingService
@@ -30,7 +31,7 @@ namespace SortingService
         /// <param name="streamGuid">The unique identifier of the session</param>
         /// <returns>The data accumulated so far, sorted lexicographically line by line</returns>
         [OperationContract]
-        string[] GetSortedStream(Guid streamGuid);
+        Stream GetSortedStream(Guid streamGuid);
 
         /// <summary>
         /// Ends the stream associated with the id provided, freeing up any resources taken

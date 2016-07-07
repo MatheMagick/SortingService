@@ -8,11 +8,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SortingService.Client.SortingService {
+namespace SortingService.Client.ServiceReference1 {
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="SortingService.ISortingService")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceReference1.ISortingService")]
     public interface ISortingService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISortingService/BeginStream", ReplyAction="http://tempuri.org/ISortingService/BeginStreamResponse")]
@@ -28,10 +28,10 @@ namespace SortingService.Client.SortingService {
         System.Threading.Tasks.Task PutStreamDataAsync(System.Guid streamGuid, string[] text);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISortingService/GetSortedStream", ReplyAction="http://tempuri.org/ISortingService/GetSortedStreamResponse")]
-        string[] GetSortedStream(System.Guid streamGuid);
+        System.IO.Stream GetSortedStream(System.Guid streamGuid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISortingService/GetSortedStream", ReplyAction="http://tempuri.org/ISortingService/GetSortedStreamResponse")]
-        System.Threading.Tasks.Task<string[]> GetSortedStreamAsync(System.Guid streamGuid);
+        System.Threading.Tasks.Task<System.IO.Stream> GetSortedStreamAsync(System.Guid streamGuid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISortingService/EndStream", ReplyAction="http://tempuri.org/ISortingService/EndStreamResponse")]
         void EndStream(System.Guid streamGuid);
@@ -41,12 +41,12 @@ namespace SortingService.Client.SortingService {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface ISortingServiceChannel : SortingService.ISortingService, System.ServiceModel.IClientChannel {
+    public interface ISortingServiceChannel : SortingService.Client.ServiceReference1.ISortingService, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class SortingServiceClient : System.ServiceModel.ClientBase<SortingService.ISortingService>, SortingService.ISortingService {
+    public partial class SortingServiceClient : System.ServiceModel.ClientBase<SortingService.Client.ServiceReference1.ISortingService>, SortingService.Client.ServiceReference1.ISortingService {
         
         public SortingServiceClient() {
         }
@@ -83,11 +83,11 @@ namespace SortingService.Client.SortingService {
             return base.Channel.PutStreamDataAsync(streamGuid, text);
         }
         
-        public string[] GetSortedStream(System.Guid streamGuid) {
+        public System.IO.Stream GetSortedStream(System.Guid streamGuid) {
             return base.Channel.GetSortedStream(streamGuid);
         }
         
-        public System.Threading.Tasks.Task<string[]> GetSortedStreamAsync(System.Guid streamGuid) {
+        public System.Threading.Tasks.Task<System.IO.Stream> GetSortedStreamAsync(System.Guid streamGuid) {
             return base.Channel.GetSortedStreamAsync(streamGuid);
         }
         

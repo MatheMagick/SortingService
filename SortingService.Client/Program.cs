@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using SortingService.Client.SortingService;
+using SortingService.Client.ServiceReference1;
 
 namespace SortingService.Client
 {
@@ -45,13 +46,24 @@ namespace SortingService.Client
             string[] chunk = TextUtils.GetRandomAlphanumericData();
 
             client.PutStreamData(sessionId, chunk);
-            var result = client.GetSortedStream(sessionId);
+            List<string> resultData = new List<string>();
+
+            using (var result = client.GetSortedStream(sessionId))
+            using (var resultReader = new StreamReader(result))
+            {
+                string resultLine;
+
+                while ((resultLine = resultReader.ReadLine()) != null)
+                {
+                    resultData.Add(resultLine);
+                }
+            }
 
             accumulatedData.AddRange(chunk);
             // The default string comparer is lexicographical so it's safe to use
             accumulatedData.Sort();
 
-            bool isCorrect = accumulatedData.SequenceEqual(result);
+            bool isCorrect = accumulatedData.SequenceEqual(resultData);
             string status = isCorrect ? "OK" : "failed";
             ++triesCount;
 

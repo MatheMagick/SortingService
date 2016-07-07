@@ -32,12 +32,12 @@ namespace SortingService.DataAccess
             return Directory.Exists(sessionDirectoryPath);
         }
 
-        public string[] GetDataForSession(Guid sessionGuid)
+        public Stream GetDataForSession(Guid sessionGuid)
         {
             Debug.Assert(SessionExists(sessionGuid));
             string sessionFilePath = GetSessionContentFilePath(sessionGuid);
 
-            return File.ReadAllLines(sessionFilePath);
+            return File.OpenRead(sessionFilePath);
         }
 
         public string GetSortedSessionFile(Guid sessionGuid)
