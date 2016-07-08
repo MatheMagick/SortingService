@@ -4,8 +4,15 @@ using System.IO;
 
 namespace SortingService.DataAccess
 {
+    /// <summary>
+    /// The data access layer of the application
+    /// </summary>
     public class DataAccessLayer
     {
+        /// <summary>
+        /// Creates a new session. A session consists of a folder with the GUID created and several files inside
+        /// </summary>
+        /// <returns>The unique id of the session</returns>
         public Guid CreateNewSession()
         {
             // Since the probability of a Guid crash is practically impossible (most DB engines rely on that), there's no need to double-check whether the Guid is already used.
@@ -35,6 +42,7 @@ namespace SortingService.DataAccess
         public Stream GetDataForSession(Guid sessionGuid)
         {
             Debug.Assert(SessionExists(sessionGuid));
+
             string sessionFilePath = GetSessionContentFilePath(sessionGuid);
 
             return File.OpenRead(sessionFilePath);
@@ -43,6 +51,7 @@ namespace SortingService.DataAccess
         public string GetSortedSessionFile(Guid sessionGuid)
         {
             Debug.Assert(SessionExists(sessionGuid));
+
             string sessionFilePath = GetSessionContentFilePath(sessionGuid);
 
             return sessionFilePath;
@@ -51,6 +60,7 @@ namespace SortingService.DataAccess
         public void SetDataForSession(Guid sessionGuid, string[] data)
         {
             Debug.Assert(SessionExists(sessionGuid));
+
             string sessionFilePath = GetSessionContentFilePath(sessionGuid);
 
             File.WriteAllLines(sessionFilePath, data);
@@ -59,6 +69,7 @@ namespace SortingService.DataAccess
         public string SetSortedSessionFile(Guid sessionGuid, string mergedFilePath)
         {
             Debug.Assert(SessionExists(sessionGuid));
+
             string sessionFilePath = GetSessionContentFilePath(sessionGuid);
             File.Delete(sessionFilePath);
             File.Move(mergedFilePath, sessionFilePath);
