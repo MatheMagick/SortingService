@@ -37,13 +37,61 @@ namespace SortingService.Client16GBFile {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("100")]
-        public string ChunkSentSizeInMB {
+        [global::System.Configuration.DefaultSettingValueAttribute("1000000")]
+        public int LinesPerChunk {
             get {
-                return ((string)(this["ChunkSentSizeInMB"]));
+                return ((int)(this["LinesPerChunk"]));
             }
             set {
-                this["ChunkSentSizeInMB"] = value;
+                this["LinesPerChunk"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public int CharactersPerFileLine {
+            get {
+                return ((int)(this["CharactersPerFileLine"]));
+            }
+            set {
+                this["CharactersPerFileLine"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        public double LargeFileSizeErrorTolerationInPercents {
+            get {
+                return ((double)(this["LargeFileSizeErrorTolerationInPercents"]));
+            }
+            set {
+                this["LargeFileSizeErrorTolerationInPercents"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("large.txt")]
+        public string LargeFilePath {
+            get {
+                return ((string)(this["LargeFilePath"]));
+            }
+            set {
+                this["LargeFilePath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("sortedLargeFile.txt")]
+        public string SortedFilePath {
+            get {
+                return ((string)(this["SortedFilePath"]));
+            }
+            set {
+                this["SortedFilePath"] = value;
             }
         }
     }
