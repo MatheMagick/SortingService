@@ -5,7 +5,10 @@ using System.IO;
 namespace SortingService.DataAccess
 {
     /// <summary>
-    /// The data access layer of the application
+    /// The data access layer of the application.
+    /// This layer exists so in the future the file-based storage could be swapped for a SQL Server database
+    /// The reasoning for choosing file-based storage is that it's easier to read, and in our case an SQL Server database would only bring further complexity without a significant benefit.
+    /// If this is to be uploaded in Azure though an SQL DB is better
     /// </summary>
     public class DataAccessLayer
     {
@@ -25,6 +28,7 @@ namespace SortingService.DataAccess
 
             string sessionFilePath = GetSessionContentFilePath(result);
 
+            // Create the content file
             using (File.Create(sessionFilePath))
             {
             }
@@ -32,6 +36,11 @@ namespace SortingService.DataAccess
             return result;
         }
 
+        /// <summary>
+        /// Returns whether a session exists
+        /// </summary>
+        /// <param name="sessionGuid">The unique identifier of the session</param>
+        /// <returns></returns>
         public bool SessionExists(Guid sessionGuid)
         {
             string sessionDirectoryPath = GetSessionDirectoryPath(sessionGuid);
@@ -39,16 +48,12 @@ namespace SortingService.DataAccess
             return Directory.Exists(sessionDirectoryPath);
         }
 
-        public Stream GetDataForSession(Guid sessionGuid)
-        {
-            Debug.Assert(SessionExists(sessionGuid));
-
-            string sessionFilePath = GetSessionContentFilePath(sessionGuid);
-
-            return File.OpenRead(sessionFilePath);
-        }
-
-        public string GetSortedSessionFile(Guid sessionGuid)
+        /// <summary>
+        /// Returns the file path of the file that contains the sorted session data for the id provided
+        /// </summary>
+        /// <param name="sessionGuid">The unique identifier of the session</param>
+        /// <returns></returns>
+        public string GetSortedSessionFilePath(Guid sessionGuid)
         {
             Debug.Assert(SessionExists(sessionGuid));
 
@@ -57,15 +62,12 @@ namespace SortingService.DataAccess
             return sessionFilePath;
         }
 
-        public void SetDataForSession(Guid sessionGuid, string[] data)
-        {
-            Debug.Assert(SessionExists(sessionGuid));
-
-            string sessionFilePath = GetSessionContentFilePath(sessionGuid);
-
-            File.WriteAllLines(sessionFilePath, data);
-        }
-
+        /// <summary>
+        /// Swaps the session content file with the one provided as a parameter. This happens by deleting the previous content file and moving the one provided to its location
+        /// </summary>
+        /// <param name="sessionGuid">The unique identifier of the session</param>
+        /// <param name="mergedFilePath">The file that should be the new content file</param>
+        /// <returns></returns>
         public string SetSortedSessionFile(Guid sessionGuid, string mergedFilePath)
         {
             Debug.Assert(SessionExists(sessionGuid));
@@ -73,9 +75,14 @@ namespace SortingService.DataAccess
             string sessionFilePath = GetSessionContentFilePath(sessionGuid);
             File.Delete(sessionFilePath);
             File.Move(mergedFilePath, sessionFilePath);
+
             return sessionFilePath;
         }
 
+        /// <summary>
+        /// Deletes the session associated with the unique id provided and all its directories and files. Any attempt to access any operation on this unique id afterwards will result in an exception
+        /// </summary>
+        /// <param name="sessionGuid"></param>
         public void DeleteSession(Guid sessionGuid)
         {
             string sessionDirectoryPath = GetSessionDirectoryPath(sessionGuid);

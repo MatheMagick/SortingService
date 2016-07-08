@@ -45,7 +45,7 @@ namespace SortingService.BusinessLayer
             {
                 CheckIfGuidIsValid(streamGuid);
 
-                string currentDataFile = _dataAccess.GetSortedSessionFile(streamGuid);
+                string currentDataFile = _dataAccess.GetSortedSessionFilePath(streamGuid);
                 var mergedFile = _sortingAlgorithm.Sort(text, currentDataFile);
 
                 _dataAccess.SetSortedSessionFile(streamGuid, mergedFile);
@@ -65,7 +65,8 @@ namespace SortingService.BusinessLayer
                 CheckIfGuidIsValid(streamGuid);
 
                 // TODO Getting the stream content is blocked by a Put operation. For responsiveness maybe have separate locks for reading and writing
-                return _dataAccess.GetDataForSession(streamGuid);
+                var contentFilePath = _dataAccess.GetSortedSessionFilePath(streamGuid);
+                return File.OpenRead(contentFilePath);
             }
         }
 
