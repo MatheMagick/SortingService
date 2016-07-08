@@ -87,6 +87,7 @@ namespace SortingService.DataAccess
         {
             string sessionDirectoryPath = GetSessionDirectoryPath(sessionGuid);
 
+            // This will not fail if the directory does not exist anymore
             Directory.Delete(sessionDirectoryPath, true);
         }
 

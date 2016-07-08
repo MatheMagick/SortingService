@@ -21,6 +21,11 @@ namespace SortingService.BusinessLayer
         private readonly DataAccessLayer _dataAccess = new DataAccessLayer();
         private readonly ImprovedSorting _sortingAlgorithm = new ImprovedSorting();
 
+        static SessionManager()
+        {
+            // TODO Regenerate all operations that may have been cut in half
+        }
+
         private SessionManager()
         {
         }
@@ -49,6 +54,8 @@ namespace SortingService.BusinessLayer
                 var mergedFile = _sortingAlgorithm.Sort(text, currentDataFile);
 
                 _dataAccess.SetSortedSessionFile(streamGuid, mergedFile);
+
+                // TODO Prolong the timer for this session
             }
         }
 

@@ -13,6 +13,11 @@ namespace SortingService
         // TODO On startup process all unfinished merges
         private readonly SessionManager _sessionManager =SessionManager.Instance;
 
+        static SortingService()
+        {
+            // TODO Insert IoC here
+        }
+
         /// <summary>
         /// Begins a new stream
         /// </summary>
