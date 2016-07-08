@@ -4,6 +4,9 @@ using SortingService.Client16GBFile.ServiceReference1;
 
 namespace SortingService.Client16GBFile
 {
+    /// <summary>
+    /// A wrapper around the <see cref="ISortingService"/> service
+    /// </summary>
     internal class SortingServiceWrapper
     {
         internal void SortFile(string filePath, string sortedFilePath)
@@ -14,7 +17,7 @@ namespace SortingService.Client16GBFile
                 SendFile(client, sessionId, filePath);
 
                 using (var result = client.GetSortedStream(sessionId))
-                using (var fileStream = File.Create("sortedLargeFile.txt"))
+                using (var fileStream = File.Create(sortedFilePath))
                 {
                     result.CopyTo(fileStream);
                 }
@@ -25,6 +28,7 @@ namespace SortingService.Client16GBFile
 
         private void SendFile(SortingServiceClient client, Guid sessionId, string filePath)
         {
+            // Each chunk has a limit on maximum amount of lines to be sent
             int linesInAChunk = Settings.Default.LinesPerChunk;
 
             using (var largeFileStream = File.OpenRead(filePath))
