@@ -12,8 +12,10 @@ namespace SortingService.BusinessLayer
     /// </summary>
     public class SessionManager
     {
+        // TODO Use IoC for singleton
         public static SessionManager Instance = new SessionManager();
 
+        // Pesimistic concurrency is used for simplicity. Another option would be to use queues
         private static readonly ConcurrentDictionary<Guid, object> SessionLocks = new ConcurrentDictionary<Guid, object>();
 
         private readonly DataAccessLayer _dataAccess = new DataAccessLayer();
@@ -32,14 +34,17 @@ namespace SortingService.BusinessLayer
             return _dataAccess.CreateNewSession();
         }
 
+        /// <summary>
+        /// Merges the data for the id provided with the previous data and sorts it
+        /// </summary>
+        /// <param name="streamGuid">The unique identifier of the session</param>
+        /// <param name="text">The data to add and sort</param>
         public void PutStreamData(Guid streamGuid, string[] text)
         {
-            // Pesimistic concurrency is used for simplicity. Another option would be to use queues
             lock (SessionLocks.GetOrAdd(streamGuid, new object()))
             {
                 CheckIfGuidIsValid(streamGuid);
 
-                // TODO The session may already be deleted
                 string currentDataFile = _dataAccess.GetSortedSessionFile(streamGuid);
                 var mergedFile = _sortingAlgorithm.Sort(text, currentDataFile);
 
@@ -47,10 +52,16 @@ namespace SortingService.BusinessLayer
             }
         }
 
+        /// <summary>
+        /// Returns the accumulated and sorted data so far
+        /// </summary>
+        /// <param name="streamGuid">The unique identifier of the session</param>
+        /// <returns></returns>
         public Stream GetStreamData(Guid streamGuid)
         {
             lock (SessionLocks.GetOrAdd(streamGuid, new object()))
             {
+                // TODO This check is repeated almost everywhere. Aspects could be used to simplify this, but we don't currently have a license for PostSharp
                 CheckIfGuidIsValid(streamGuid);
 
                 // TODO Getting the stream content is blocked by a Put operation. For responsiveness maybe have separate locks for reading and writing

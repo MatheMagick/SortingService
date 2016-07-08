@@ -5,8 +5,20 @@
     <Setting Name="FileSizeInGB" Type="System.Byte" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
-    <Setting Name="ChunkSentSizeInMB" Type="System.String" Scope="User">
+    <Setting Name="LinesPerChunk" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1000000</Value>
+    </Setting>
+    <Setting Name="CharactersPerFileLine" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">100</Value>
+    </Setting>
+    <Setting Name="LargeFileSizeErrorTolerationInPercents" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">10</Value>
+    </Setting>
+    <Setting Name="LargeFilePath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">large.txt</Value>
+    </Setting>
+    <Setting Name="SortedFilePath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">sortedLargeFile.txt</Value>
     </Setting>
   </Settings>
 </SettingsFile>
