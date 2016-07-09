@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 
 namespace SortingService.DataAccess
 {
@@ -60,6 +61,22 @@ namespace SortingService.DataAccess
             string sessionFilePath = GetSessionContentFilePath(sessionGuid);
 
             return sessionFilePath;
+        }
+
+        /// <summary>
+        /// Returns all chunks that have not been still merged
+        /// </summary>
+        /// <returns></returns>
+        public UnfinishedChunkFileData[] GetUnfinishedChunkFiles()
+        {
+            return Directory.GetFiles(Settings.Default.SessionDirectoriesRoot, "*.chunk", SearchOption.AllDirectories)
+                .Select(x => new UnfinishedChunkFileData()
+                {
+                    ContentFileName = Path.ChangeExtension(x, ".txt"),
+                    ChunkFileName = x,
+                    SessionId = Guid.Parse(Path.GetDirectoryName(x))
+                })
+                .ToArray();
         }
 
         /// <summary>
