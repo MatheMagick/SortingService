@@ -18,12 +18,20 @@ namespace SortingService.BusinessLayer
         // Pesimistic concurrency is used for simplicity. Another option would be to use queues
         private static readonly ConcurrentDictionary<Guid, object> SessionLocks = new ConcurrentDictionary<Guid, object>();
 
-        private readonly DataAccessLayer _dataAccess = new DataAccessLayer();
-        private readonly ImprovedSorting _sortingAlgorithm = new ImprovedSorting();
+        private static readonly DataAccessLayer DataAccess = new DataAccessLayer();
+        private static readonly ImprovedSorting _sortingAlgorithm = new ImprovedSorting();
 
         static SessionManager()
         {
-            // TODO Regenerate all operations that may have been cut in half
+            // Regenerate all operations that may have been cut in half
+            var unfinishedChunkFiles = DataAccess.GetUnfinishedChunkFiles();
+
+            foreach (var chunkData in unfinishedChunkFiles)
+            {
+                var mergedFile = _sortingAlgorithm.MergeSortedFiles(chunkData.ContentFileName, chunkData.ChunkFileName);
+
+                DataAccess.SetSortedSessionFile(chunkData.SessionId, mergedFile);
+            }
         }
 
         private SessionManager()
@@ -36,7 +44,7 @@ namespace SortingService.BusinessLayer
         /// <returns>The unique identifier of the session</returns>
         public Guid StartNewSession()
         {
-            return _dataAccess.CreateNewSession();
+            return DataAccess.CreateNewSession();
         }
 
         /// <summary>
@@ -50,10 +58,10 @@ namespace SortingService.BusinessLayer
             {
                 CheckIfGuidIsValid(streamGuid);
 
-                string currentDataFile = _dataAccess.GetSortedSessionFilePath(streamGuid);
+                string currentDataFile = DataAccess.GetSortedSessionFilePath(streamGuid);
                 var mergedFile = _sortingAlgorithm.Sort(text, currentDataFile);
 
-                _dataAccess.SetSortedSessionFile(streamGuid, mergedFile);
+                DataAccess.SetSortedSessionFile(streamGuid, mergedFile);
 
                 // TODO Prolong the timer for this session
             }
@@ -72,7 +80,7 @@ namespace SortingService.BusinessLayer
                 CheckIfGuidIsValid(streamGuid);
 
                 // TODO Getting the stream content is blocked by a Put operation. For responsiveness maybe have separate locks for reading and writing
-                var contentFilePath = _dataAccess.GetSortedSessionFilePath(streamGuid);
+                var contentFilePath = DataAccess.GetSortedSessionFilePath(streamGuid);
                 return File.OpenRead(contentFilePath);
             }
         }
@@ -83,7 +91,7 @@ namespace SortingService.BusinessLayer
             {
                 CheckIfGuidIsValid(streamGuid);
 
-                _dataAccess.DeleteSession(streamGuid);
+                DataAccess.DeleteSession(streamGuid);
 
                 object removedKey;
                 SessionLocks.TryRemove(streamGuid, out removedKey);
@@ -92,7 +100,7 @@ namespace SortingService.BusinessLayer
 
         private void CheckIfGuidIsValid(Guid streamGuid)
         {
-            if (!_dataAccess.SessionExists(streamGuid))
+            if (!DataAccess.SessionExists(streamGuid))
             {
                 throw new FaultException($"No session for the guid provided: {streamGuid}");
             }

@@ -28,10 +28,8 @@ namespace SortingService.BusinessLayer.SortingAlgorithms
             // Dump the received data to a file so in case of an outage we don't lose it and it gets processed upon startup
             File.WriteAllLines(chunkFilePath, recievedData);
 
-            string mergedFilePath = Path.ChangeExtension(currentSortedDataFile, ".merged");
-
             // TODO currently the merge is done for every chunk sent. In case this becomes a problem, batch several merges together
-            MergeSortedFiles(currentSortedDataFile, chunkFilePath, mergedFilePath);
+            string mergedFilePath = MergeSortedFiles(currentSortedDataFile, chunkFilePath);
 
             // The chunk is no longer necessary, we can delete it
             File.Delete(chunkFilePath);
@@ -39,8 +37,16 @@ namespace SortingService.BusinessLayer.SortingAlgorithms
             return mergedFilePath;
         }
 
-        private void MergeSortedFiles(string currentSortedDataFile, string chunkFilePath, string mergedFilePath)
+        /// <summary>
+        /// Merges two sorted files into one
+        /// </summary>
+        /// <param name="currentSortedDataFile">First sorted file path</param>
+        /// <param name="chunkFilePath">Second sorted file path</param>
+        /// <param name="mergedFilePath">The resulting merged file path</param>
+        public string MergeSortedFiles(string currentSortedDataFile, string chunkFilePath)
         {   
+            string mergedFilePath = Path.ChangeExtension(currentSortedDataFile, ".merged");
+
             //MemoryMappedFile is also an option, but in this case we prefer StreamReader
             //because we just need to read the file line by line, not manipulate its memory in-place
             using (var mergedFileStream = File.CreateText(mergedFilePath))
@@ -70,6 +76,8 @@ namespace SortingService.BusinessLayer.SortingAlgorithms
                     }
                 }
             }
+
+            return mergedFilePath;
         }
     }
 }
