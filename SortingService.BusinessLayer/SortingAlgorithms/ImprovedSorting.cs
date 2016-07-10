@@ -6,7 +6,7 @@ namespace SortingService.BusinessLayer.SortingAlgorithms
     /// <summary>
     /// A class for sorting using a simplified version of merge sort
     /// </summary>
-    public class ImprovedSorting : IImprovedSorting
+    internal class ImprovedSorting : IImprovedSorting
     {
         /// <summary>
         /// Sorts the data provided and merges it with the already sorted file.
