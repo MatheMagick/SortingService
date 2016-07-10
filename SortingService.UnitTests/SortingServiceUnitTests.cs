@@ -9,7 +9,6 @@ namespace SortingService.UnitTests
         [TestMethod]
         public void TestMethod1()
         {
-            SessionManager manager = new SessionManager();
         }
     }
 }

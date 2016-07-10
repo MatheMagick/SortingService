@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using SortingService.BusinessLayer;
+using SortingService.BusinessLayer.SortingAlgorithms;
 using SortingService.DataAccess;
 
 namespace SortingService
