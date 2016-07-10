@@ -11,9 +11,7 @@ namespace SortingService
 
         public static void InitializeBindings()
         {
-            Container.RegisterType<ISessionManager, SessionManager>();
-            Container.RegisterType<IImprovedSorting, ImprovedSorting>();
-            Container.RegisterType<IDataAccessLayer, DataAccessLayer>();
+            BusinessLayerUnityConfig.InitializeBindings(Container);
         }
     }
 }

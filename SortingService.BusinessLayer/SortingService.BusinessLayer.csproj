@@ -64,6 +64,7 @@
     <Compile Include="SortingAlgorithms\IImprovedSorting.cs" />
     <Compile Include="SortingAlgorithms\ImprovedSorting.cs" />
     <Compile Include="SortingAlgorithms\NaiveSorting.cs" />
+    <Compile Include="BusinessLayerUnityConfig.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SortingService.DataAccess\SortingService.DataAccess.csproj">
