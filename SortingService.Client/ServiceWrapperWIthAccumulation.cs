@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using SortingService.Client.ServiceReference1;
+using SortingService.Clients.Common;
 
 namespace SortingService.Client
 {
@@ -11,7 +12,7 @@ namespace SortingService.Client
     /// </summary>
     internal class ServiceWrapperWIthAccumulation
     {
-        private List<string> AccumulatedData = new List<string>();
+        private readonly List<string> AccumulatedData = new List<string>();
 
         /// <summary>
         /// Sends multiple random alphanumerical chunks to the service and checks whether the result returned is correct

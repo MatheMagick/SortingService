@@ -1,7 +1,6 @@
 ﻿using Microsoft.Practices.Unity;
-using SortingService.DataAccess;
 
-namespace SortingService
+namespace SortingService.DataAccess
 {
     public static class DALUnityConfig
     {

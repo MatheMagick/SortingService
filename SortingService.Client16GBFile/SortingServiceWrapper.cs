@@ -36,12 +36,13 @@ namespace SortingService.Client16GBFile
             {
                 bool endOfFile = false;
                 string[] chunk = new string[linesInAChunk];
-                string textFileRow;
 
                 while (!endOfFile)
                 {
                     for (int i = 0; i < linesInAChunk; i++)
                     {
+                        string textFileRow;
+
                         if (( textFileRow = textStream.ReadLine() ) == null)
                         {
                             endOfFile = true;

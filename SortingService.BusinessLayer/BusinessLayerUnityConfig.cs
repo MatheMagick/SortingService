@@ -1,5 +1,6 @@
 ﻿using Microsoft.Practices.Unity;
 using SortingService.BusinessLayer.SortingAlgorithms;
+using SortingService.DataAccess;
 
 namespace SortingService.BusinessLayer
 {

@@ -1,4 +1,5 @@
 ﻿using System;
+using SortingService.Client.ServiceReference1;
 
 namespace SortingService.Client
 {

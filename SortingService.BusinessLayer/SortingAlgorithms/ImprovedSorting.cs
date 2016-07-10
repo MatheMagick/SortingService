@@ -42,7 +42,6 @@ namespace SortingService.BusinessLayer.SortingAlgorithms
         /// </summary>
         /// <param name="currentSortedDataFile">First sorted file path</param>
         /// <param name="chunkFilePath">Second sorted file path</param>
-        /// <param name="mergedFilePath">The resulting merged file path</param>
         public string MergeSortedFiles(string currentSortedDataFile, string chunkFilePath)
         {   
             string mergedFilePath = Path.ChangeExtension(currentSortedDataFile, ".merged");

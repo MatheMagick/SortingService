@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SortingService.BusinessLayer;
 
 namespace SortingService.UnitTests
 {

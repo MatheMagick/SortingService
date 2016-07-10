@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Linq;
 
-namespace SortingService.Client
+namespace SortingService.Clients.Common
 {
     /// <summary>
     /// Utilities for random alphanumeric text generation
     /// </summary>
     public static class TextUtils
     {
-        private static Random Random = new Random();
+        private static readonly Random Random = new Random();
         private const string AlphanumericCharactersWithSpace = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz 0123456789";
 
         /// <summary>

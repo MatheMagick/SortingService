@@ -1,9 +1,10 @@
 ﻿using System;
+using SortingService.Client16GBFile.ServiceReference1;
 
 namespace SortingService.Client16GBFile
 {
     /// <summary>
-    /// A test client for sending and sorting a file that is several gigabytes long via the <see cref="ServiceReferenceSortingService.ISortingService"/> service
+    /// A test client for sending and sorting a file that is several gigabytes long via the <see cref="ISortingService"/> service
     /// </summary>
     class Program
     {

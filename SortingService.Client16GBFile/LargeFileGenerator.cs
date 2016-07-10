@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using SortingService.Client;
+using SortingService.Clients.Common;
 
 namespace SortingService.Client16GBFile
 {

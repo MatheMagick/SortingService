@@ -15,8 +15,8 @@ namespace SortingService.BusinessLayer
         // Pesimistic concurrency is used for simplicity. Another option would be to use queues
         private static readonly ConcurrentDictionary<Guid, object> SessionLocks = new ConcurrentDictionary<Guid, object>();
 
-        private IDataAccessLayer _dataAccess;
-        private IImprovedSorting _sortingAlgorithm;
+        private readonly IDataAccessLayer _dataAccess;
+        private readonly IImprovedSorting _sortingAlgorithm;
 
         public SessionManager(IDataAccessLayer dataAccess, IImprovedSorting sortingAlgorithm)
         {
