@@ -49,8 +49,6 @@ namespace SortingService.BusinessLayer
                 var mergedFile = _sortingAlgorithm.Sort(text, currentDataFile);
 
                 _dataAccess.SetSortedSessionFile(streamGuid, mergedFile);
-
-                // TODO Prolong the timer for this session
             }
         }
 
@@ -67,6 +65,7 @@ namespace SortingService.BusinessLayer
                 CheckIfGuidIsValid(streamGuid);
 
                 // TODO Getting the stream content is blocked by a Put operation. For responsiveness maybe have separate locks for reading and writing
+                // This would improve throughput but there should be locking on the data access layer to prevent cases where the data stream is still being used via a get operation while we try to replace it
                 var contentFilePath = _dataAccess.GetSortedSessionFilePath(streamGuid);
                 return File.OpenRead(contentFilePath);
             }
