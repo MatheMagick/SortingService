@@ -1,4 +1,7 @@
 ﻿using Microsoft.Practices.Unity;
+using SortingService.BusinessLayer;
+using SortingService.BusinessLayer.SortingAlgorithms;
+using SortingService.DataAccess;
 
 namespace SortingService
 {
@@ -8,7 +11,9 @@ namespace SortingService
 
         public static void InitializeBindings()
         {
-            Container.RegisterTypes(AllClasses.FromLoadedAssemblies(), WithMappings.FromMatchingInterface);
+            Container.RegisterType<ISessionManager, SessionManager>();
+            Container.RegisterType<IImprovedSorting, ImprovedSorting>();
+            Container.RegisterType<IDataAccessLayer, DataAccessLayer>();
         }
     }
 }

@@ -1,8 +1,7 @@
 ﻿using System;
 using System.IO;
 using SortingService.BusinessLayer;
-using SortingService.BusinessLayer.SortingAlgorithms;
-using SortingService.DataAccess;
+using Microsoft.Practices.Unity;
 
 namespace SortingService
 {
@@ -12,7 +11,7 @@ namespace SortingService
     public class SortingService : ISortingService
     {
         // TODO Use IoC
-        private static readonly SessionManager _sessionManager = new SessionManager(new DataAccessLayer(), new ImprovedSorting());
+        private static readonly ISessionManager _sessionManager;
 
         static SortingService()
         {
@@ -20,6 +19,7 @@ namespace SortingService
             // This is generally not a good idea, so once this is wrapped in an application move this to its startup method
             // There is also the Unity.WCF NuGet package, but sadly currently it does not play well with service libraries (it's targeting either IIS hosting or self-hosting)
             UnityConfig.InitializeBindings();
+            _sessionManager = UnityConfig.Container.Resolve<ISessionManager>();
         }
 
         /// <summary>
