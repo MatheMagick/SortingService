@@ -11,7 +11,7 @@ namespace SortingService.DataAccess
     /// The reasoning for choosing file-based storage is that it's easier to read, and in our case an SQL Server database would only bring further complexity without a significant benefit.
     /// If this is to be uploaded in Azure though an SQL DB is better
     /// </summary>
-    public class DataAccessLayer
+    public class DataAccessLayer : IDataAccessLayer
     {
         /// <summary>
         /// Creates a new session. A session consists of a folder with the GUID created and several files inside
@@ -74,7 +74,7 @@ namespace SortingService.DataAccess
                 {
                     ContentFileName = Path.ChangeExtension(x, ".txt"),
                     ChunkFileName = x,
-                    SessionId = Guid.Parse(Path.GetDirectoryName(x))
+                    SessionId = Guid.Parse(new DirectoryInfo(Path.GetDirectoryName(x)).Name)
                 })
                 .ToArray();
         }

@@ -1,5 +1,5 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SortingService.BusinessLayer;
 
 namespace SortingService.UnitTests
 {
@@ -9,6 +9,7 @@ namespace SortingService.UnitTests
         [TestMethod]
         public void TestMethod1()
         {
+            SessionManager manager = new SessionManager();
         }
     }
 }

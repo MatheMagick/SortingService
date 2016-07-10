@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using SortingService.BusinessLayer;
+using SortingService.DataAccess;
 
 namespace SortingService
 {
@@ -10,12 +11,14 @@ namespace SortingService
     public class SortingService : ISortingService
     {
         // TODO Use IoC
-        // TODO On startup process all unfinished merges
-        private readonly SessionManager _sessionManager =SessionManager.Instance;
+        private static readonly SessionManager _sessionManager = new SessionManager(new DataAccessLayer(), new ImprovedSorting());
 
         static SortingService()
         {
-            // TODO Insert IoC here
+            // TODO Since this is a service library, we don't have a startup method so we use the static constructor
+            // This is generally not a good idea, so once this is wrapped in an application move this to its startup method
+            // There is also the Unity.WCF NuGet package, but sadly currently it does not play well with service libraries (it's targeting either IIS hosting or self-hosting)
+            UnityConfig.InitializeBindings();
         }
 
         /// <summary>

@@ -42,8 +42,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ISessionManager.cs" />
     <Compile Include="SessionManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SortingAlgorithms\IImprovedSorting.cs" />
     <Compile Include="SortingAlgorithms\ImprovedSorting.cs" />
     <Compile Include="SortingAlgorithms\NaiveSorting.cs" />
   </ItemGroup>
