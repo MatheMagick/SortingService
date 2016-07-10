@@ -59,7 +59,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="SortingServiceUnitTests.cs" />
+    <Compile Include="SesssionManagerUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -69,6 +69,10 @@
     <ProjectReference Include="..\SortingService.BusinessLayer\SortingService.BusinessLayer.csproj">
       <Project>{131d96e9-913d-4445-8c4f-d0f9b0bb0ac5}</Project>
       <Name>SortingService.BusinessLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SortingService.DataAccess\SortingService.DataAccess.csproj">
+      <Project>{899738e2-fcec-4cbd-9344-16ef523b627e}</Project>
+      <Name>SortingService.DataAccess</Name>
     </ProjectReference>
     <ProjectReference Include="..\SortingService\SortingService.csproj">
       <Project>{ef7f3294-9e47-401c-be2d-2b37e98b6f01}</Project>
