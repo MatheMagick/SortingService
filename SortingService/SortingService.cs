@@ -10,8 +10,7 @@ namespace SortingService
     /// </summary>
     public class SortingService : ISortingService
     {
-        // TODO Use IoC
-        private static readonly ISessionManager _sessionManager;
+        private static readonly ISessionManager SessionManager;
 
         static SortingService()
         {
@@ -19,7 +18,7 @@ namespace SortingService
             // This is generally not a good idea, so once this is wrapped in an application move this to its startup method
             // There is also the Unity.WCF NuGet package, but sadly currently it does not play well with service libraries (it's targeting either IIS hosting or self-hosting)
             UnityConfig.InitializeBindings();
-            _sessionManager = UnityConfig.Container.Resolve<ISessionManager>();
+            SessionManager = UnityConfig.Container.Resolve<ISessionManager>();
         }
 
         /// <summary>
@@ -28,7 +27,7 @@ namespace SortingService
         /// <returns>The unique identifier of this session</returns>
         public Guid BeginStream()
         {
-            return _sessionManager.StartNewSession();
+            return SessionManager.StartNewSession();
         }
 
         /// <summary>
@@ -38,7 +37,7 @@ namespace SortingService
         /// <param name="text">The data to be added the session</param>
         public void PutStreamData(Guid streamGuid, string[] text)
         {
-            _sessionManager.PutStreamData(streamGuid, text);
+            SessionManager.PutStreamData(streamGuid, text);
         }
 
         /// <summary>
@@ -48,7 +47,7 @@ namespace SortingService
         /// <returns>The data accumulated so far, sorted lexicographically line by line</returns>
         public Stream GetSortedStream(Guid streamGuid)
         {
-            return _sessionManager.GetStreamData(streamGuid);
+            return SessionManager.GetStreamData(streamGuid);
         }
 
         /// <summary>
@@ -57,7 +56,7 @@ namespace SortingService
         /// <param name="streamGuid">The unique identifier of the session</param>
         public void EndStream(Guid streamGuid)
         {
-            _sessionManager.EndStream(streamGuid);
+            SessionManager.EndStream(streamGuid);
         }
     }
 }

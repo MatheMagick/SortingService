@@ -12,7 +12,7 @@ namespace SortingService.Client
     /// </summary>
     internal class ServiceWrapperWIthAccumulation
     {
-        private readonly List<string> AccumulatedData = new List<string>();
+        private readonly List<string> _accumulatedData = new List<string>();
 
         /// <summary>
         /// Sends multiple random alphanumerical chunks to the service and checks whether the result returned is correct
@@ -51,11 +51,11 @@ namespace SortingService.Client
         private IEnumerable<string> GetExpectedData(string[] chunk)
         {
             // Store the data sent so far in sorted order
-            AccumulatedData.AddRange(chunk);
+            _accumulatedData.AddRange(chunk);
             // The default string comparer is lexicographical so it's safe to use
-            AccumulatedData.Sort();
+            _accumulatedData.Sort();
 
-            return AccumulatedData;
+            return _accumulatedData;
         }
 
         private static IEnumerable<string> GetSortedDataFromService(SortingServiceClient client, Guid sessionId)
