@@ -25,7 +25,7 @@ namespace SortingService.Client16GBFile {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("16")]
         public byte FileSizeInGB {
             get {
                 return ((byte)(this["FileSizeInGB"]));
